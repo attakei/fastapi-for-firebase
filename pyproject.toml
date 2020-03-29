@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-for-firebase"
-version = "0.0.2"
+version = "0.1.0"
 description = ""
 authors = ["Kazuya Takei <myself@attakei.net>"]
 license = "Apache-2.0"
