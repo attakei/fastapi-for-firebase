@@ -22,7 +22,7 @@ Module usage
 from dataclasses import dataclass, field
 from typing import Callable, Dict
 
-from fastapi import Request, Response
+from fastapi import HTTPException, Request, Response
 
 from . import CacheControl
 
@@ -45,6 +45,7 @@ class StrategyStore(object):
 
 def cache_control_strategy(name: str) -> Callable:
     """Dependency Injection using cache-control strategy.
+    If stategy is not exists. raise http-500.
 
     Currently spec
     --------------
@@ -55,8 +56,11 @@ def cache_control_strategy(name: str) -> Callable:
 
     async def _cache_control_strategy(request: Request, response: Response):
         if request.method == "GET":
-            store: StrategyStore = request.app.state.cache_control_strategy
-            cc = store.get_rule(name)
-            response.headers[cc.header_name] = cc.header_value
+            try:
+                store: StrategyStore = request.app.state.cache_control_strategy
+                cc = store.get_rule(name)
+                response.headers[cc.header_name] = cc.header_value
+            except KeyError:
+                raise HTTPException(status_code=500, detail="invalid-cache-control")
 
     return _cache_control_strategy
