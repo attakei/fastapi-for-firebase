@@ -26,3 +26,7 @@ jobs:
       - name: Test code
         run: |
           poetry run pytest
+      - name: Test docs
+        run: |
+          poetry run sphinx-apidoc -o docs/api fastapi_for_firebase
+          poetry run make -C docs html
