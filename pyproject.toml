@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "fastapi-for-firebase"
+version = "0.1.0"
+description = ""
+authors = ["Kazuya Takei <myself@attakei.net>"]
+license = "Apache-2.0"
+
+[tool.poetry.dependencies]
+python = "^3.8 | ^3.7"
+python-dotenv = "^0.11.0"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^3.7.9"
+doc8 = "^0.8.0"
+black = "^19.10b0"
+pytest = "^5.3.5"
+
+[tool.poetry.scripts]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
