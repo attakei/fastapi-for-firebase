@@ -6,7 +6,8 @@ from fastapi_for_firebase.hosting.middleware import cache_control
 
 
 @pytest.mark.parametrize(
-    "max_age,s_maxage,header_value", [(30, 60, "public, max-age=30, s-maxage=60"), (30, None, "public, max-age=30")]
+    "max_age,s_maxage,header_value",
+    [(30, 60, "public, max-age=30, s-maxage=60"), (30, None, "public, max-age=30")],
 )
 def test_cache_control__get(max_age, s_maxage, header_value):
     app = FastAPI()

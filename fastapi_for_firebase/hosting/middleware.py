@@ -29,7 +29,9 @@ def cache_control(max_age: int = None, s_maxage: int = None) -> MiddlewareCallab
     """
     cc = CacheControl(max_age, s_maxage)
 
-    async def _cache_control(request: Request, call_next: MiddlewareCallable) -> Response:
+    async def _cache_control(
+        request: Request, call_next: MiddlewareCallable
+    ) -> Response:
         response = await call_next(request)
         if request.method == "GET":
             response.headers[cc.header_name] = cc.header_value

@@ -10,6 +10,7 @@ from dataclasses import dataclass
 class CacheControl:
     """Cache-Control header object.
     """
+
     max_age: int = 0
     s_maxage: int = 0
 
