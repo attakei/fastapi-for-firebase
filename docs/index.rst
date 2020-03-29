@@ -7,6 +7,7 @@ FastAPI support functions for Firebase backend
    :maxdepth: 2
    :caption: Contents:
 
+   api
 
 Indices and tables
 ==================

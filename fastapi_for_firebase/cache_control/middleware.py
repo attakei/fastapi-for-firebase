@@ -14,9 +14,6 @@ MiddlewareCallable = Callable[[Request], Awaitable[Response]]
 def cache_control(max_age: int = None, s_maxage: int = None) -> MiddlewareCallable:
     """Bind Cache-Control for all GET request.
 
-    Usage
-    -----
-
     When you define FastAPI application, set this function as middleware.
 
     .. code-block:: python

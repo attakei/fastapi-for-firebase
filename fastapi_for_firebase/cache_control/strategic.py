@@ -1,7 +1,6 @@
 """Strategic cache-control.
 
-Module usage
-------------
+Module usage:
 
 1. Plan your cache-control storategy. (ex: "long" caches content until 3600 seconds)
 2. Set storategy store to your app.state and add rules.
@@ -70,10 +69,10 @@ def store_from_env(prefix: str = None) -> StrategyStore:
 
 def cache_control_strategy(name: str) -> Callable:
     """Dependency Injection using cache-control strategy.
+
     If stategy is not exists. raise http-500.
 
-    Currently spec
-    --------------
+    Currently spec:
 
     - app.state must have "cache_control_strategy" attribute.
     - strategy object must be set all rule before request.
