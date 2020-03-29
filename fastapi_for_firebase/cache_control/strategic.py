@@ -19,6 +19,7 @@ Module usage
    async def hello():
        return "hello world"
 """
+import os
 from dataclasses import dataclass, field
 from typing import Callable, Dict
 
@@ -41,6 +42,31 @@ class StrategyStore(object):
         if name in self.rules:
             raise Exception(f"Rule '{name}' is already exists.")
         self.rules[name] = CacheControl(max_age, s_maxage)
+
+
+def store_from_env(prefix: str = None) -> StrategyStore:
+    """Create strategy-store from environment variables.
+
+    1. Find prefixed key from environment-variables.
+    2. Create rule from environment.
+    3. Create store and register these rules.
+
+    :param prefix: Using prefix of environment variables.
+    """
+    prefix = "CACHE_CONTROL_" if prefix is None else prefix
+    strategy = StrategyStore()
+    filtered = {
+        k[len(prefix):].lower(): v
+        for k, v in os.environ.items()
+        if k.startswith(prefix)
+    }
+    for name, values in filtered.items():
+        value_dict = {}
+        for pair in values.split(","):
+            k, v = pair.split(":")
+            value_dict[k] = int(v)
+        strategy.add_rule(name, **value_dict)
+    return strategy
 
 
 def cache_control_strategy(name: str) -> Callable:

@@ -1,3 +1,7 @@
+import os
+from unittest import mock
+
+import pytest
 from fastapi import Depends, FastAPI
 from fastapi.testclient import TestClient
 
@@ -38,3 +42,21 @@ def test_cache_control__post():
     response = TestClient(app).post("/")
     assert response.text == '"OK"'
     assert "Cache-Control" not in response.headers
+
+
+@pytest.mark.parametrize("env,rules", [
+    ({}, 0),
+    ({"CACHE_CONTROL_LONG": "max_age:600"}, 1),
+    ({"CACHE_CONTROL_LONG": "max_age:600", "CACHE_CONTROL_SHORT": "max_age:60"}, 2)
+])
+def test_store_from_env__rules(env, rules):
+    with mock.patch.dict(os.environ, env):
+        strategy = strategic.store_from_env()
+        assert len(strategy.rules) == rules
+
+
+def test_store_from_env__format():
+    with mock.patch.dict(os.environ, {"CACHE_CONTROL_LONG": "max_age:600"}):
+        strategy = strategic.store_from_env()
+        rule = strategy.get_rule("long")
+        assert rule.max_age == 600
