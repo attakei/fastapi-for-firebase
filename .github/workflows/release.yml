@@ -20,6 +20,8 @@ jobs:
         id: build_package
         run: |
           poetry build
+          mv $(ls dist/*.tar.gz) dist/package.tar.gz
+          mv $(ls dist/*.whl) dist/package.whl
           echo ::set-output name=targz::$(basename $(ls dist/*tar.gz))
           echo ::set-output name=wheel::$(basename $(ls dist/*whl))
       - name: Create Release
@@ -39,8 +41,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/${{ steps.build_package.outputs.targz }}
-          asset_name: ${{ steps.build_package.outputs.targz }}
+          asset_path: dist/package.tar.gz
+          asset_name: package.tar.gz
           asset_content_type: application/gzip
       - name: Upload Release Asset(wheel)
         uses: actions/upload-release-asset@v1
@@ -48,6 +50,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/${{ steps.build_package.outputs.wheel }}
-          asset_name: ${{ steps.build_package.outputs.wheel }}
+          asset_path: dist/package.whl
+          asset_name: package.whl
           asset_content_type: application/zip
