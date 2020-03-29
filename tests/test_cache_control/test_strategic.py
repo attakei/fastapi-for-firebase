@@ -44,11 +44,14 @@ def test_cache_control__post():
     assert "Cache-Control" not in response.headers
 
 
-@pytest.mark.parametrize("env,rules", [
-    ({}, 0),
-    ({"CACHE_CONTROL_LONG": "max_age:600"}, 1),
-    ({"CACHE_CONTROL_LONG": "max_age:600", "CACHE_CONTROL_SHORT": "max_age:60"}, 2)
-])
+@pytest.mark.parametrize(
+    "env,rules",
+    [
+        ({}, 0),
+        ({"CACHE_CONTROL_LONG": "max_age:600"}, 1),
+        ({"CACHE_CONTROL_LONG": "max_age:600", "CACHE_CONTROL_SHORT": "max_age:60"}, 2),
+    ],
+)
 def test_store_from_env__rules(env, rules):
     with mock.patch.dict(os.environ, env):
         strategy = strategic.store_from_env()

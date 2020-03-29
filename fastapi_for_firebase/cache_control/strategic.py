@@ -54,11 +54,10 @@ def store_from_env(prefix: str = None) -> StrategyStore:
     :param prefix: Using prefix of environment variables.
     """
     prefix = "CACHE_CONTROL_" if prefix is None else prefix
+    plen = len(prefix)
     strategy = StrategyStore()
     filtered = {
-        k[len(prefix):].lower(): v
-        for k, v in os.environ.items()
-        if k.startswith(prefix)
+        k[plen:].lower(): v for k, v in os.environ.items() if k.startswith(prefix)
     }
     for name, values in filtered.items():
         value_dict = {}
