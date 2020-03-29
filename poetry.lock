@@ -133,7 +133,7 @@ python-versions = ">=2.7"
 version = "0.3"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 name = "fastapi"
 optional = false
@@ -295,7 +295,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.5.0"
 
 [[package]]
-category = "dev"
+category = "main"
 description = "Data validation and settings management using python 3.6 type hinting"
 name = "pydantic"
 optional = false
@@ -532,7 +532,7 @@ lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
 
 [[package]]
-category = "dev"
+category = "main"
 description = "The little ASGI library that shines."
 name = "starlette"
 optional = false
@@ -605,7 +605,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "2f392f65cbb58a335d4df46051a4dce0bcec10111912413abdb1840572005ffb"
+content-hash = "d5a66ab37a94202403c20b0c653b904ef13bb4c4998a1a0d0376e6ef2b60b9ed"
 python-versions = "^3.8 | ^3.7"
 
 [metadata.files]

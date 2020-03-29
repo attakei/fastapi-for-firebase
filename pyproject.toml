@@ -8,6 +8,7 @@ license = "Apache-2.0"
 [tool.poetry.dependencies]
 python = "^3.8 | ^3.7"
 python-dotenv = "^0.11.0"
+fastapi = "*"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"
