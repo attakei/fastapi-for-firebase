@@ -25,6 +25,7 @@ from typing import Callable, Dict
 from fastapi import HTTPException, Request, Response
 
 from . import CacheControl
+from ..env_helper import filter_envmap, parse_as_dict
 
 
 @dataclass
@@ -53,16 +54,9 @@ def store_from_env(prefix: str = None) -> StrategyStore:
     :param prefix: Using prefix of environment variables.
     """
     prefix = "CACHE_CONTROL_" if prefix is None else prefix
-    plen = len(prefix)
     strategy = StrategyStore()
-    filtered = {
-        k[plen:].lower(): v for k, v in os.environ.items() if k.startswith(prefix)
-    }
-    for name, values in filtered.items():
-        value_dict = {}
-        for pair in values.split(","):
-            k, v = pair.split(":")
-            value_dict[k] = int(v)
+    for name, value in filter_envmap(prefix, os.environ).items():
+        value_dict = parse_as_dict(value, convert=int)
         strategy.add_rule(name, **value_dict)
     return strategy
 
