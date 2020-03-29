@@ -2,7 +2,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from fastapi_for_firebase.hosting.middleware import cache_control
+from fastapi_for_firebase.cache_control import middleware
 
 
 @pytest.mark.parametrize(
@@ -12,7 +12,7 @@ from fastapi_for_firebase.hosting.middleware import cache_control
 def test_cache_control__get(max_age, s_maxage, header_value):
     app = FastAPI()
     client = TestClient(app)
-    app.middleware("http")(cache_control(max_age, s_maxage))
+    app.middleware("http")(middleware.cache_control(max_age, s_maxage))
     app.get("/")(lambda: "OK")
     response = client.get("/")
     assert response.text == '"OK"'
@@ -22,7 +22,7 @@ def test_cache_control__get(max_age, s_maxage, header_value):
 def test_cache_control__post():
     app = FastAPI()
     client = TestClient(app)
-    app.middleware("http")(cache_control())
+    app.middleware("http")(middleware.cache_control())
     app.post("/")(lambda: "OK")
     response = client.post("/")
     assert response.text == '"OK"'

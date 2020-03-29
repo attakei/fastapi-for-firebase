@@ -1,9 +1,9 @@
 import pytest
-from fastapi_for_firebase import hosting
+from fastapi_for_firebase import cache_control
 
 
 def test_header_value__default():
-    cc = hosting.CacheControl()
+    cc = cache_control.CacheControl()
     assert cc.header_value == "public"
 
 
@@ -18,5 +18,5 @@ def test_header_value__default():
     ],
 )
 def test_header_value__parameters(max_age, s_maxage, expected):
-    cc = hosting.CacheControl(max_age, s_maxage)
+    cc = cache_control.CacheControl(max_age, s_maxage)
     assert cc.header_value == expected
